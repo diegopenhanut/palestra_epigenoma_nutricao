@@ -1,0 +1,186 @@
+Desafios da Associação entre Epigenoma e Nutricao
+========================================================
+author: Emanuel Diego S Penha
+date: 01/09/2016
+autosize: true
+
+Epigenoma
+========================================================
+- Ativação/inativação do DNA sem mudança de sequência
+- O conjunto dessas várias alterações químicas
+  - Metilação 
+  - Modificação de histonas
+  - Acessibilidade da cromatina
+
+
+Epigenoma é mais complexo que o genoma
+========================================================
+- Para completar o genoma de uma pessoa, basta uma fonte de dados
+- O DNA é bastante estável de uma célula para célula
+- Para obter o epigenoma são necessárias várias amostras
+  - Muitas variações quanto métodos e dados
+
+O Epigenoma varia 
+========================================================
+![](figuras/00-print_epigenome_atlas.png)
+
+***
+
+- Tipo celular
+- Estímulo
+- Estado Fisiológico
+- Relação com expressão gênica
+
+Exemplos de associações de alteraçoes epigenéticas e nutrição
+========================================================
+
+DDT - Prato cheio para teorias da conspiração
+========================================================
+
+![](figuras/04-resultados_ddt.png)
+
+      Skinner, Michael K., Mohan Manikkam, Rebecca Tracey, Carlos Guerrero-Bosagna, Muksitul Haque, and Eric E. Nilsson. “Ancestral Dichlorodiphenyltrichloroethane (DDT) Exposure Promotes Epigenetic Transgenerational Inheritance of Obesity.” BMC Medicine 11, no. 1 (October 23, 2013): 228. doi:10.1186/1741-7015-11-228.
+
+Folato e Epigenética
+========================================================
+
+- Mutação na sintase redutase de metionina Mtrr
+- Importante na metilação
+      
+      Padmanabhan, Nisha, Dongxin Jia, Colleen Geary-Joo, Xuchu Wu, Anne C. Ferguson-Smith, Ernest Fung, Mark C. Bieda, et al. “Mutation in Folate Metabolism Causes Epigenetic Instability and Transgenerational Effects on Development.” Cell 155, no. 1 (September 26, 2013): 81–93. doi:10.1016/j.cell.2013.09.002.
+
+
+Aumento da metilação do DNA induzida por deficiência 
+========================================================
+- Dieta deficiente
+- Depois uma dieta normal
+- Aumento nos níveis de metilação no fígado de ratos 
+
+      Kotsopoulos, Joanne, Kyoung-Jin Sohn, and Young-In Kim. “Postweaning Dietary Folate Deficiency Provided through Childhood to Puberty Permanently Increases Genomic DNA Methylation in Adult Rat Liver.” The Journal of Nutrition 138, no. 4 (2008): 703–709.
+
+
+
+Estudos que tentam associar todo o Genoma e/ou Epigenoma
+========================================================
+Epigenome wide association studies vs Genome wide association studies
+  
+Do ponto de vista estatístico?
+========================================================
+- Multipla comparações e número muito alto de variáveis são um problema
+
+Como a associação é geralmente testada? 
+========================================================
+- Correlação
+- Regressão
+- Qui-quadrado
+- Métodos de agrupamento ou redução de dimensionalidade
+  - Análise de clusters
+  - Regressão Lasso 
+  - Principal Component Analysis - PCA
+  - Non Negative Matrix Factorization - NMF
+
+Valores de p
+========================================================
+![](figuras/03-pvalues.png)
+
+Problema com GWAS
+========================================================
+- Genes ~ 20.000
+- SNPs ~ 10 million SNPs
+- Váriaveis de interesse, ou dependentes
+
+  
+Associação entre genes e cancer como exemplo
+========================================================
+- Um estado binário - câncer estar presente ou não
+- Ou uma escala com estadiamento do cancer
+  - 5 níveis para câncer de mama
+- 22.000 variáveis, se usarmos somente genes
+
+caso | classificação | mais 22.000 colunas boleanas para genes 
+---- | ------------- | ---------------------------------------
+1    | II            | 0
+2    | I             | 1
+3    | I             | 0
+4    | I             | 1
+5    | IV            | 0
+
+Tabelas largas dificultam análise
+========================================================
+- Regressões mais simples não funcionam
+- Número de casos menor do que o de variáveis é um complicador
+  - Mesmo para PCA 
+
+
+Supondo usar somente bisulfide-seq
+========================================================
+- Padrão de metilação
+- Hoje a resolução chega ao nível do nucleotídeo
+- Expressa em porcentagens (valores entre 0 e 1)
+
+Uma maneira de organizar esses dados
+========================================================
+
+caso | classificação | mais 22.000 colunas mutação de genes | mais 22.000 colunas para metilação 
+---- | ------------- | ------------------------------------ | -----------------------------------
+1    | II            | 0.5                                  | 1
+2    | I             | 1                                    | 0
+3    | I             | 0.6                                  | 0
+4    | I             | 1                                    | 1
+5    | IV            | 0.2                                  | 1
+
+Uma melhor organização
+========================================================
+
+caso | classificação | variável  | 22.000 colunas de genes  
+---- | ------------- | --------- | ------------------------------
+1    | II            | metilação | 0.5       
+2    | I             | metilação | 1        
+3    | I             | metilação | 0.6        
+4    | I             | metilação | 1        
+5    | IV            | metilação | 0.2        
+1    | II            | mutação 	 | 1        
+2    | I             | mutação 	 | 0        
+3    | I             | mutação   | 0        
+4    | I             | mutação   | 1        
+5    | IV            | mutação 	 | 1         
+
+E um estudo com variáveis Nutricionais + Epigenoma?
+========================================================
+- Bioquímicas
+- Antropométricas
+- Ingestão de nutrientes
+
+Tomemos como exemplo a Pesquisa de Orçamentos Familiares de 2008-2009
+========================================================
+- 36 variáveis de ingestão de nutrientes, isso sem contar as antropométricas
+  - podem checar a 40, se usarmos participação dos macro em % de kcal
+- Aqui as variáveis são contínuas
+
+Usando Bofferonni, para manter o exemplo simples
+========================================================
+```{r}
+n_testes <- 36 * 5 * 2 * 22.000
+n_testes
+0.05 / n_testes 
+```
+
+Usando Bofferonni e False Discovery Rate (FDR), a partir de que p se teria uma correlação significativa?
+========================================================
+```{r}
+pvalues <- c(0.000001, 0.000005, 0.00001, 0.00005, 0.0001, 0.0005, 0.001, 0.005, 0.01, 0.05)
+p.ajustado <- p.adjust(pvalues, method = "bonferroni", n_testes)
+p.ajustado.fdr <- p.adjust(pvalues, method = "fdr", n_testes)
+cbind(pvalues, p.ajustado, p.ajustado.fdr)
+```
+
+Perigos das comparações multiplas
+========================================================
+![](figuras/02-significant.png)
+
+
+O que fazer?
+========================================================
+- Usar valores de *p* (ou outro score) somente como priorização
+  - Algo como pegar os 20 *p-values* mais baixos e tentar trabalhar o significado biológico deles
+  
