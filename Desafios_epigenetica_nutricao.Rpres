@@ -175,13 +175,14 @@ n_testes
 
 Usando Bofferonni e False Discovery Rate (FDR), a partir de que p se teria uma correlação significativa?
 ========================================================
+<small>
 ```{r}
 pvalues <- c(0.000001, 0.000005, 0.00001, 0.00005, 0.0001, 0.0005, 0.001, 0.005, 0.01, 0.05)
 p.ajustado <- p.adjust(pvalues, method = "bonferroni", n_testes)
 p.ajustado.fdr <- p.adjust(pvalues, method = "fdr", n_testes)
 cbind(pvalues, p.ajustado, p.ajustado.fdr)
 ```
-
+</small>
 Perigos das comparações multiplas
 ========================================================
 ![](figuras/02-significant.png)

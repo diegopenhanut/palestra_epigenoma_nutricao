@@ -1203,6 +1203,8 @@ n_testes
 <section data-transition="linear" data-transition-speed="default">
 <h3>Usando Bofferonni e False Discovery Rate (FDR), a partir de que p se teria uma correlação significativa?</h3>
 <div class="slideContent" >
+<p><small></p>
+
 <pre><code class="r">pvalues &lt;- c(0.000001, 0.000005, 0.00001, 0.00005, 0.0001, 0.0005, 0.001, 0.005, 0.01, 0.05)
 p.ajustado &lt;- p.adjust(pvalues, method = &quot;bonferroni&quot;, n_testes)
 p.ajustado.fdr &lt;- p.adjust(pvalues, method = &quot;fdr&quot;, n_testes)
@@ -1221,6 +1223,8 @@ cbind(pvalues, p.ajustado, p.ajustado.fdr)
  [9,]   1e-02    1.00000        1.00000
 [10,]   5e-02    1.00000        1.00000
 </code></pre>
+
+<p></small></p>
 
 </div>
 
