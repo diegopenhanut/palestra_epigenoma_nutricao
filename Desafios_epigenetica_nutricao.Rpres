@@ -38,7 +38,7 @@ O Epigenoma varia
 Exemplos de associações de alterações epigenéticas e nutrição
 ========================================================
 
-DDT - Prato cheio para teorias da conspiração
+DDT - Prato cheio para teorias da conspiração (ou não?)
 ========================================================
 
 ![](figuras/04-resultados_ddt.png)
@@ -155,6 +155,29 @@ E um estudo com variáveis Nutricionais + Epigenoma?
 - Antropométricas
 - Ingestão de nutrientes
 
+Bioquímicas
+========================================================
+- Pontuais
+- t0 - tratamento - efeito
+
+
+Problemas com avaliação de ingestão de nutrientes em indivíduos e grupos
+========================================================
+- Associar o consumo de alimentos com uma variável é diferente 
+de estimar a quantidade de consumo
+- Ajuste de nutrientes é complicado 
+  - R24h, QFA, MSM
+- Variação dia a dia, intra individual é maior que entre indivíduos
+- Técnicas vão variar, mas o cerne é o ajuste com base em redução da variância intrapessoal
+- Efeito de variação de ingestão de nutrientes geralmente é fraca em populações saudáveis
+
+Antropometria 
+========================================================
+- Inespecífico, em relação a causa e efeito
+  - Resultado líquido de muitos fatores agindo ao mesmo tempo
+- Geralmente é a consequência, não uma causa que possa ser controlada
+    - Mesmo que se possa definir grupos de obesidade e eutrofia 
+
 Tomemos como exemplo a Pesquisa de Orçamentos Familiares de 2008-2009
 ========================================================
 - 36 variáveis de ingestão de nutrientes, isso sem contar as antropométricas
@@ -190,6 +213,10 @@ O que fazer?
 ========================================================
 - Usar valores de *p* (ou outro score) somente como priorização
   - Algo como pegar os 20 *p-values* mais baixos e tentar trabalhar o significado biológico deles
+- Uso de redes e métodos de clusterização, não necessariamente com valores *p*
+  - Weighted correlation network analysis
+    - **Eigengenes**
+  - NMF
 - Ou limitar o escopo do estudo, usando menos variáveis
 
 :)
