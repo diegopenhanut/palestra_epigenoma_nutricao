@@ -1,4 +1,4 @@
-Desafios da Associação entre Epigenoma e Nutricao
+Desafios da Associação entre Epigenoma e Nutrição
 ========================================================
 author: Emanuel Diego S Penha
 date: 01/09/2016
@@ -70,7 +70,7 @@ Epigenome wide association studies vs Genome wide association studies
   
 Do ponto de vista estatístico?
 ========================================================
-- Multipla comparações e número muito alto de variáveis são um problema
+- Múltipla comparações e número muito alto de variáveis são um problema
 
 Como a associação é geralmente testada? 
 ========================================================
@@ -87,11 +87,11 @@ Valores de p
 ========================================================
 ![](figuras/03-pvalues.png)
 
-Problema com GWAS
+Problema com GWAs
 ========================================================
 - Genes ~ 20.000
 - SNPs ~ 10 million SNPs
-- Váriaveis de interesse, ou dependentes
+- Variáveis de interesse, ou dependentes
 
   
 Associação entre genes e cancer como exemplo
@@ -101,7 +101,7 @@ Associação entre genes e cancer como exemplo
   - 5 níveis para câncer de mama
 - 22.000 variáveis, se usarmos somente genes
 
-caso | classificação | mais 22.000 colunas boleanas para genes 
+caso | classificação | mais 22.000 colunas booleanas para genes 
 ---- | ------------- | ---------------------------------------
 1    | II            | 0
 2    | I             | 1
@@ -202,7 +202,7 @@ p.ajustado.fdr <- p.adjust(pvalues, method = "fdr", n_testes)
 cbind(pvalues, p.ajustado, p.ajustado.fdr)
 ```
 </small>
-Perigos das comparações multiplas
+Perigos das comparações múltiplas
 ========================================================
 ![](figuras/02-significant.png)
 
